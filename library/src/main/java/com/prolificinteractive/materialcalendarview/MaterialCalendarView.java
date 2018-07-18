@@ -307,8 +307,8 @@ public class MaterialCalendarView extends ViewGroup {
                     .commit();
 
             setSelectionMode(a.getInteger(
-                R.styleable.MaterialCalendarView_mcv_selectionMode,
-                SELECTION_MODE_SINGLE
+                    R.styleable.MaterialCalendarView_mcv_selectionMode,
+                    SELECTION_MODE_SINGLE
             ));
 
             final int tileSize = a.getLayoutDimension(R.styleable.MaterialCalendarView_mcv_tileSize, INVALID_TILE_DIMENSION);
@@ -2073,6 +2073,9 @@ public class MaterialCalendarView extends ViewGroup {
                 break;
             case WEEKS:
                 newAdapter = new WeekPagerAdapter(this);
+                break;
+            case TWO_WEEKS:
+                newAdapter = new TwoWeekPagerAdapter(this);
                 break;
             default:
                 throw new IllegalArgumentException("Provided display mode which is not yet implemented");

@@ -4,7 +4,8 @@ package com.prolificinteractive.materialcalendarview;
 public enum CalendarMode {
 
     MONTHS(6),
-    WEEKS(1);
+    WEEKS(1),
+    TWO_WEEKS(2);
 
     final int visibleWeeksCount;
 
