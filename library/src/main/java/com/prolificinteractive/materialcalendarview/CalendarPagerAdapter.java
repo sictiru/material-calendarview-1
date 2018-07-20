@@ -207,7 +207,7 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
         }
     }
 
-    public void setDateTextAppearance(int taId) {
+    void setDateTextAppearance(int taId) {
         if (taId == 0) {
             return;
         }
@@ -252,7 +252,7 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
         return showOtherDates;
     }
 
-    public void setWeekDayTextAppearance(int taId) {
+    void setWeekDayTextAppearance(int taId) {
         if (taId == 0) {
             return;
         }
@@ -341,5 +341,23 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
 
     protected int getWeekDayTextAppearance() {
         return weekDayTextAppearance == null ? 0 : weekDayTextAppearance;
+    }
+
+    public CalendarDay getInitStartDate() {
+        return today;
+    }
+
+    public CalendarDay getInitEndDate(int position) {
+        return rangeIndex.getWeeksMaxDate(position);
+    }
+
+    void setDaysExtra(List<CalendarDay> customDays) {
+        for (V pagerView : currentViews) {
+            pagerView.setDaysExtra(customDays);
+        }
+    }
+
+    public WeekDayRange getVisibleWeekDays(int position) {
+        return rangeIndex.getVisibleWeekDays(position);
     }
 }

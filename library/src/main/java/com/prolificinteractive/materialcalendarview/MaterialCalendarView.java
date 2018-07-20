@@ -202,9 +202,13 @@ public class MaterialCalendarView extends ViewGroup {
         public void onPageSelected(int position) {
             titleChanger.setPreviousMonth(currentMonth);
             currentMonth = adapter.getItem(position);
+            if (weekMaxDate == null) {
+                weekMaxDate = adapter.getInitEndDate(position);
+            }
             updateUi();
 
             dispatchOnMonthChanged(currentMonth);
+            dispatchOnWeekChanged(position);
         }
 
         @Override
@@ -218,10 +222,12 @@ public class MaterialCalendarView extends ViewGroup {
 
     private CalendarDay minDate = null;
     private CalendarDay maxDate = null;
+    private CalendarDay weekMaxDate = null;
 
     private OnDateSelectedListener listener;
     private OnDateLongClickListener longClickListener;
     private OnMonthChangedListener monthListener;
+    private OnWeekChangedListener weekListener;
     private OnRangeSelectedListener rangeListener;
 
     CharSequence calendarContentDescription;
@@ -2040,10 +2046,10 @@ public class MaterialCalendarView extends ViewGroup {
                         // Currently selected date is within view, so center on that
                         calendarDayToShow = currentlySelectedDate;
                     }
-                } else if (calendarMode == CalendarMode.WEEKS) {
+                } else if (calendarMode == CalendarMode.WEEKS || calendarMode == CalendarMode.TWO_WEEKS) {
                     // Going from weeks to months
                     Calendar lastVisibleCalendar = calendarDayToShow.getCalendar();
-                    lastVisibleCalendar.add(Calendar.DAY_OF_WEEK, 6);
+                    lastVisibleCalendar.add(Calendar.DAY_OF_WEEK, calendarMode == CalendarMode.TWO_WEEKS ? 13 : 6);
                     CalendarDay lastVisibleCalendarDay = CalendarDay.from(lastVisibleCalendar);
                     if (currentlySelectedDate != null &&
                             (currentlySelectedDate.equals(calendarDayToShow) || currentlySelectedDate.equals(lastVisibleCalendarDay) ||
@@ -2104,5 +2110,28 @@ public class MaterialCalendarView extends ViewGroup {
 
         invalidateDecorators();
         updateUi();
+    }
+
+    public void setDaysExtra(List<CalendarDay> customDays) {
+        adapter.setDaysExtra(customDays);
+    }
+
+    protected void dispatchOnWeekChanged(int position) {
+        OnWeekChangedListener listener = weekListener;
+        if (listener != null) {
+            listener.onWeekChanged(MaterialCalendarView.this, adapter.getVisibleWeekDays(position));
+        }
+    }
+
+    public void setOnWeekChangedListener(OnWeekChangedListener listener) {
+        this.weekListener = listener;
+    }
+
+    public String getInitStartDate() {
+        return adapter.getInitStartDate().getDateString();
+    }
+
+    public String getInitEndDate() {
+        return weekMaxDate.getDateString();
     }
 }

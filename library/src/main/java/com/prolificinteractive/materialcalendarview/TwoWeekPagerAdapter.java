@@ -85,5 +85,26 @@ public class TwoWeekPagerAdapter extends CalendarPagerAdapter<TwoWeekView> {
             CalendarDay calendarDay = CalendarDay.from(calendar);
             return CalendarDay.from(calendar);
         }
+
+        @Override
+        public WeekDayRange getVisibleWeekDays(int position) {
+            WeekDayRange weekDayRange = new WeekDayRange();
+            long minMillis = min.getDate().getTime();
+            long millisOffset = TimeUnit.MILLISECONDS.convert(position * DAYS_IN_TWO_WEEKS, TimeUnit.DAYS);
+            long currentMillis = minMillis + millisOffset;
+            long lastDayOffset = TimeUnit.MILLISECONDS.convert(13, TimeUnit.DAYS);
+            weekDayRange.startDate = CalendarDay.from(currentMillis).getDateString();
+            weekDayRange.endDate = CalendarDay.from(lastDayOffset + currentMillis).getDateString();
+            return weekDayRange;
+        }
+
+        @Override
+        public CalendarDay getWeeksMaxDate(int position) {
+            long minMillis = min.getDate().getTime();
+            long millisOffset = TimeUnit.MILLISECONDS.convert(position * DAYS_IN_TWO_WEEKS, TimeUnit.DAYS);
+            long currentMillis = minMillis + millisOffset;
+            long nextDayOffset = TimeUnit.MILLISECONDS.convert(6, TimeUnit.DAYS);
+            return CalendarDay.from(nextDayOffset + currentMillis);
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.prolificinteractive.materialcalendarview;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +125,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
 
     public void setDateTextAppearance(int taId) {
         for (DayView dayView : dayViews) {
-            dayView.setTextAppearance(getContext(), taId);
+            dayView.getTextDay().setTextAppearance(getContext(), taId);
         }
     }
 
@@ -154,12 +156,6 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     public void setDayFormatter(DayFormatter formatter) {
         for (DayView dayView : dayViews) {
             dayView.setDayFormatter(formatter);
-        }
-    }
-
-    public void setDayFormatterContentDescription(DayFormatter formatter) {
-        for (DayView dayView : dayViews) {
-            dayView.setDayFormatterContentDescription(formatter);
         }
     }
 
@@ -200,6 +196,26 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
                 }
             }
             dayView.applyFacade(facadeAccumulator);
+        }
+    }
+
+    public void setDaysExtra(List<CalendarDay> customDays) {
+        for (DayView dayView : dayViews) {
+            for (CalendarDay day : customDays) {
+                if (dayView.getDate().equals(day) && (dayView.getDate().equals(minDate) || dayView.getDate().isAfter(minDate))) {
+                    dayView.getTextDayExtra().setText(day.getExtra());
+                    if (!TextUtils.isEmpty(day.getColor())) {
+                        dayView.getTextDayExtra().setTextColor(Color.parseColor(day.getColor()));
+                    }
+                    dayView.getTextDayExtra().setVisibility(VISIBLE);
+                }
+            }
+        }
+    }
+
+    public void setDayFormatterContentDescription(DayFormatter formatter) {
+        for (DayView dayView : dayViews) {
+            dayView.setDayFormatterContentDescription(formatter);
         }
     }
 

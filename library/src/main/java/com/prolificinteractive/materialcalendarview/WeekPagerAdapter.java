@@ -3,7 +3,6 @@ package com.prolificinteractive.materialcalendarview;
 import android.support.annotation.NonNull;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Experimental
@@ -86,6 +85,27 @@ public class WeekPagerAdapter extends CalendarPagerAdapter<WeekView> {
                 calendar.add(Calendar.DAY_OF_WEEK, -1);
             }
             return CalendarDay.from(calendar);
+        }
+
+        @Override
+        public WeekDayRange getVisibleWeekDays(int position) {
+            WeekDayRange weekDayRange = new WeekDayRange();
+            long minMillis = min.getDate().getTime();
+            long millisOffset = TimeUnit.MILLISECONDS.convert(position * DAYS_IN_WEEK, TimeUnit.DAYS);
+            long currentMillis = minMillis + millisOffset;
+            long lastDayOffset = TimeUnit.MILLISECONDS.convert(6, TimeUnit.DAYS);
+            weekDayRange.startDate = CalendarDay.from(currentMillis).toString();
+            weekDayRange.endDate = CalendarDay.from(lastDayOffset + currentMillis).toString();
+            return weekDayRange;
+        }
+
+        @Override
+        public CalendarDay getWeeksMaxDate(int position) {
+            long minMillis = min.getDate().getTime();
+            long millisOffset = TimeUnit.MILLISECONDS.convert(position * DAYS_IN_WEEK, TimeUnit.DAYS);
+            long currentMillis = minMillis + millisOffset;
+            long nextDayOffset = TimeUnit.MILLISECONDS.convert(6, TimeUnit.DAYS);
+            return CalendarDay.from(nextDayOffset + currentMillis);
         }
     }
 }

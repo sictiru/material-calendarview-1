@@ -68,6 +68,8 @@ public final class CalendarDay implements Parcelable {
     private final int year;
     private final int month;
     private final int day;
+    private String extra;
+    private String color;
 
     /**
      * Cache for calls to {@linkplain #getCalendar()}
@@ -147,6 +149,23 @@ public final class CalendarDay implements Parcelable {
      *
      * @return a date with this days information
      */
+
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
     @NonNull
     public Date getDate() {
         if (_date == null) {
@@ -258,6 +277,9 @@ public final class CalendarDay implements Parcelable {
         return "CalendarDay{" + year + "-" + month + "-" + day + "}";
     }
 
+    public String getDateString() {
+        return year + "-" + (month + 1) + "-" + day;
+    }
     /*
      * Parcelable Stuff
      */

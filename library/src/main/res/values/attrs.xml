@@ -5,6 +5,7 @@
 
         <attr name="mcv_dateTextAppearance" format="reference" />
         <attr name="mcv_weekDayTextAppearance" format="reference" />
+        <attr name="mcv_dateExtraTextAppearance" format="reference" />
         <attr name="mcv_headerTextAppearance" format="reference" />
 
         <attr name="mcv_arrowColor" format="color" />
@@ -23,6 +24,7 @@
 
         <attr name="mcv_allowClickDaysOutsideCurrentMonth" format="boolean" />
         <attr name="mcv_showWeekDays" format="boolean" />
+        <attr name="mcv_showDatePrice" format="boolean" />
 
         <attr name="mcv_weekDayLabels" format="reference" />
         <attr name="mcv_monthLabels" format="reference" />

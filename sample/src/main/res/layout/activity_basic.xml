@@ -11,11 +11,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".BasicActivity">
 
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/calendarView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mcv_calendarMode="two_weeks" />
+        android:layout_height="wrap_content">
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:mcv_calendarMode="two_weeks" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
@@ -24,5 +29,21 @@
         android:layout_gravity="center"
         android:layout_margin="16dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/button_mode_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:text="Mode Toggle" />
+
+    <Button
+        android:id="@+id/button_add_prices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:text="Add prices" />
 
 </LinearLayout>

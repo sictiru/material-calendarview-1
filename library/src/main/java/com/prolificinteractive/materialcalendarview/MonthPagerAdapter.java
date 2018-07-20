@@ -78,5 +78,15 @@ class MonthPagerAdapter extends CalendarPagerAdapter<MonthView> {
             dayCache.put(position, re);
             return re;
         }
+
+        @Override
+        public WeekDayRange getVisibleWeekDays(int position) {
+            return new WeekDayRange();
+        }
+
+        @Override
+        public CalendarDay getWeeksMaxDate(int position) {
+            return null;
+        }
     }
 }

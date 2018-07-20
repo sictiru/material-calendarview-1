@@ -10,4 +10,8 @@ interface DateRangeIndex {
     int indexOf(CalendarDay day);
 
     CalendarDay getItem(int position);
+
+    CalendarDay getWeeksMaxDate(int position);
+
+    WeekDayRange getVisibleWeekDays(int position);
 }
