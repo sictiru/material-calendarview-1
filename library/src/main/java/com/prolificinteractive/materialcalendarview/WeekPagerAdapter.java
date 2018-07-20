@@ -94,8 +94,8 @@ public class WeekPagerAdapter extends CalendarPagerAdapter<WeekView> {
             long millisOffset = TimeUnit.MILLISECONDS.convert(position * DAYS_IN_WEEK, TimeUnit.DAYS);
             long currentMillis = minMillis + millisOffset;
             long lastDayOffset = TimeUnit.MILLISECONDS.convert(6, TimeUnit.DAYS);
-            weekDayRange.startDate = CalendarDay.from(currentMillis).toString();
-            weekDayRange.endDate = CalendarDay.from(lastDayOffset + currentMillis).toString();
+            weekDayRange.startDate = CalendarDay.from(currentMillis).getDateString();
+            weekDayRange.endDate = CalendarDay.from(lastDayOffset + currentMillis).getDateString();
             return weekDayRange;
         }
 
