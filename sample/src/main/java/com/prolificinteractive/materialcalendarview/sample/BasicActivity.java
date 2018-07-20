@@ -46,7 +46,7 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
         ButterKnife.bind(this);
 
         widget.state().edit()
-                .setMinimumDate(CalendarDay.from(2018, 4, 3))
+                .setMinimumDate(CalendarDay.from(2018, 6, 20))
                 .setMaximumDate(CalendarDay.from(2020, 5, 12))
                 .commit();
         widget.setOnDateChangedListener(this);

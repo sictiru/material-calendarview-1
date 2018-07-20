@@ -82,7 +82,6 @@ public class TwoWeekPagerAdapter extends CalendarPagerAdapter<TwoWeekView> {
             while (calendar.get(Calendar.DAY_OF_WEEK) != wantedFirstDayOfWeek) {
                 calendar.add(Calendar.DAY_OF_WEEK, -1);
             }
-            CalendarDay calendarDay = CalendarDay.from(calendar);
             return CalendarDay.from(calendar);
         }
 
@@ -103,7 +102,7 @@ public class TwoWeekPagerAdapter extends CalendarPagerAdapter<TwoWeekView> {
             long minMillis = min.getDate().getTime();
             long millisOffset = TimeUnit.MILLISECONDS.convert(position * DAYS_IN_TWO_WEEKS, TimeUnit.DAYS);
             long currentMillis = minMillis + millisOffset;
-            long nextDayOffset = TimeUnit.MILLISECONDS.convert(6, TimeUnit.DAYS);
+            long nextDayOffset = TimeUnit.MILLISECONDS.convert(13, TimeUnit.DAYS);
             return CalendarDay.from(nextDayOffset + currentMillis);
         }
     }

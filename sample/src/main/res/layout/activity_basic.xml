@@ -19,7 +19,9 @@
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:mcv_calendarMode="two_weeks" />
+            app:mcv_calendarMode="two_weeks"
+            app:mcv_firstDayOfWeek="monday"
+            app:mcv_showOtherDates="out_of_range"/>
     </LinearLayout>
 
     <TextView
