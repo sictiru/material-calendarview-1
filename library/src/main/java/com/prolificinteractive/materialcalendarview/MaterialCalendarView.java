@@ -179,6 +179,7 @@ public class MaterialCalendarView extends ViewGroup {
     private CalendarDay currentMonth;
     private LinearLayout topbar;
     private CalendarMode calendarMode;
+    private int maxSelectionCount;
     /**
      * Used for the dynamic calendar height.
      */
@@ -295,6 +296,8 @@ public class MaterialCalendarView extends ViewGroup {
                     R.styleable.MaterialCalendarView_mcv_firstDayOfWeek,
                     -1
             );
+
+            maxSelectionCount = a.getInt(R.styleable.MaterialCalendarView_mcv_maxSelectionCount, 100);
 
             titleChanger.setOrientation(
                     a.getInteger(R.styleable.MaterialCalendarView_mcv_titleAnimationOrientation,
@@ -1480,8 +1483,10 @@ public class MaterialCalendarView extends ViewGroup {
     protected void onDateClicked(@NonNull CalendarDay date, boolean nowSelected) {
         switch (selectionMode) {
             case SELECTION_MODE_MULTIPLE: {
-                adapter.setDateSelected(date, nowSelected);
-                dispatchOnDateSelected(date, nowSelected);
+                if (adapter.getSelectedDates().size() < maxSelectionCount || adapter.getSelectedDates().contains(date)) {
+                    adapter.setDateSelected(date, nowSelected);
+                    dispatchOnDateSelected(date, nowSelected);
+                }
             }
             break;
             case SELECTION_MODE_RANGE: {
