@@ -351,9 +351,15 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
         return rangeIndex.getWeeksMaxDate(position);
     }
 
-    void setDaysExtra(List<CalendarDay> customDays) {
+    void setDaysExtra(ArrayList<CalendarDay> customDays) {
         for (V pagerView : currentViews) {
             pagerView.setDaysExtra(customDays);
+        }
+    }
+
+    void setDisabledDays(ArrayList<CalendarDay> disabledDays) {
+        for (V pageview : currentViews) {
+            pageview.setDisabledDays(disabledDays);
         }
     }
 

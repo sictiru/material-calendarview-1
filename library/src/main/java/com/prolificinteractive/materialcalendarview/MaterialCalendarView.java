@@ -276,13 +276,10 @@ public class MaterialCalendarView extends ViewGroup {
         titleChanger = new TitleChanger(title);
         titleChanger.setTitleFormatter(DEFAULT_TITLE_FORMATTER);
 
-        pager.setOnPageChangeListener(pageChangeListener);
-        pager.setPageTransformer(false, new ViewPager.PageTransformer() {
-            @Override
-            public void transformPage(View page, float position) {
-                position = (float) Math.sqrt(1 - Math.abs(position));
-                page.setAlpha(position);
-            }
+        pager.addOnPageChangeListener(pageChangeListener);
+        pager.setPageTransformer(false, (page, position) -> {
+            position = (float) Math.sqrt(1 - Math.abs(position));
+            page.setAlpha(position);
         });
 
         TypedArray a = context.getTheme()
@@ -2117,8 +2114,12 @@ public class MaterialCalendarView extends ViewGroup {
         updateUi();
     }
 
-    public void setDaysExtra(List<CalendarDay> customDays) {
+    public void setDaysExtra(ArrayList<CalendarDay> customDays) {
         adapter.setDaysExtra(customDays);
+    }
+
+    public void setDisabledDays(ArrayList<CalendarDay> disabledDays) {
+        adapter.setDisabledDays(disabledDays);
     }
 
     protected void dispatchOnWeekChanged(int position) {

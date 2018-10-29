@@ -199,7 +199,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         }
     }
 
-    public void setDaysExtra(List<CalendarDay> customDays) {
+    public void setDaysExtra(ArrayList<CalendarDay> customDays) {
         for (DayView dayView : dayViews) {
             for (CalendarDay day : customDays) {
                 if (dayView.getDate().equals(day) && (dayView.getDate().equals(minDate) || dayView.getDate().isAfter(minDate))) {
@@ -208,6 +208,18 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
                         dayView.getTextDayExtra().setTextColor(Color.parseColor(day.getColor()));
                     }
                     dayView.getTextDayExtra().setVisibility(VISIBLE);
+                }
+            }
+        }
+    }
+
+    public void setDisabledDays(ArrayList<CalendarDay> disabledDays) {
+        for (DayView dayView : dayViews) {
+            for (CalendarDay day : disabledDays) {
+                if (dayView.getDate().equals(day) && (dayView.getDate().equals(minDate) || dayView.getDate().isAfter(minDate))) {
+                    dayView.setEnabled(false);
+                    dayView.getTextDay().setTextColor(Color.parseColor("#a7a6a6"));
+                    dayView.getTextDayExtra().setVisibility(View.GONE);
                 }
             }
         }
