@@ -180,6 +180,8 @@ public class MaterialCalendarView extends ViewGroup {
     private LinearLayout topbar;
     private CalendarMode calendarMode;
     private int maxSelectionCount;
+    private boolean isSelectionDisabled = false;
+
     /**
      * Used for the dynamic calendar height.
      */
@@ -442,6 +444,14 @@ public class MaterialCalendarView extends ViewGroup {
         titleChanger.change(currentMonth);
         buttonPast.setEnabled(canGoBack());
         buttonFuture.setEnabled(canGoForward());
+    }
+
+    public void setSelectionDisabled(boolean disableSelection) {
+        this.isSelectionDisabled = disableSelection;
+    }
+
+    public boolean isSelectionDisabled() {
+        return isSelectionDisabled;
     }
 
     /**
