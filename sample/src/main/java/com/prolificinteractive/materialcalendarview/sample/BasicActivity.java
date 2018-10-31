@@ -18,6 +18,7 @@ import com.prolificinteractive.materialcalendarview.WeekDayRange;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,14 +57,14 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
 
         //Setup initial text
         textView.setText("No Selection");
-        Log.d("BasicActivity", widget.getInitStartDate() + " - " + widget.getInitEndDate());
-        initStart = widget.getInitStartDate();
-        initEnd = widget.getInitEndDate();
+//        Log.d("BasicActivity", widget.getInitStartDate() + " - " + widget.getInitEndDate());
+//        initStart = widget.getInitStartDate();
+//        initEnd = widget.getInitEndDate();
     }
 
     @Override
-    public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        textView.setText(selected ? FORMATTER.format(date.getDate()) : "No Selection");
+    public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected, boolean isDisabled) {
+        textView.setText(selected && !isDisabled? FORMATTER.format(date.getDate()) : "No Selection");
     }
 
     @Override
@@ -96,5 +97,13 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
                     .setCalendarDisplayMode(CalendarMode.MONTHS)
                     .commit();
         }
+    }
+
+    @OnClick(R.id.button_disable_days)
+    public void disableDaysClicked() {
+        ArrayList<CalendarDay> disabledDays = new ArrayList<>();
+        disabledDays.add(CalendarDay.from(2018, 9, 30));
+        disabledDays.add(CalendarDay.from(2018, 9, 31));
+        widget.setDisabledDays(disabledDays);
     }
 }

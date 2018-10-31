@@ -821,7 +821,7 @@ public class MaterialCalendarView extends ViewGroup {
         List<CalendarDay> dates = getSelectedDates();
         adapter.clearSelections();
         for (CalendarDay day : dates) {
-            dispatchOnDateSelected(day, false);
+            dispatchOnDateSelected(day, false, false);
         }
     }
 
@@ -1435,9 +1435,9 @@ public class MaterialCalendarView extends ViewGroup {
      * @param day      the day that was selected
      * @param selected true if the day is now currently selected, false otherwise
      */
-    protected void dispatchOnDateSelected(final CalendarDay day, final boolean selected) {
+    protected void dispatchOnDateSelected(final CalendarDay day, final boolean selected, final boolean disabled) {
         if (listener != null) {
-            listener.onDateSelected(MaterialCalendarView.this, day, selected);
+            listener.onDateSelected(MaterialCalendarView.this, day, selected, disabled);
         }
     }
 
@@ -1487,12 +1487,12 @@ public class MaterialCalendarView extends ViewGroup {
      * @param date        date of the day that was clicked
      * @param nowSelected true if the date is now selected, false otherwise
      */
-    protected void onDateClicked(@NonNull CalendarDay date, boolean nowSelected) {
+    protected void onDateClicked(@NonNull CalendarDay date, boolean nowSelected, boolean disabled) {
         switch (selectionMode) {
             case SELECTION_MODE_MULTIPLE: {
                 if (adapter.getSelectedDates().size() < maxSelectionCount || adapter.getSelectedDates().contains(date)) {
                     adapter.setDateSelected(date, nowSelected);
-                    dispatchOnDateSelected(date, nowSelected);
+                    dispatchOnDateSelected(date, nowSelected, disabled);
                 }
             }
             break;
@@ -1502,14 +1502,14 @@ public class MaterialCalendarView extends ViewGroup {
                 if (currentSelection.size() == 0) {
                     // Selecting the first date of a range
                     adapter.setDateSelected(date, nowSelected);
-                    dispatchOnDateSelected(date, nowSelected);
+                    dispatchOnDateSelected(date, nowSelected, disabled);
                 } else if (currentSelection.size() == 1) {
                     // Selecting the second date of a range
                     final CalendarDay firstDaySelected = currentSelection.get(0);
                     adapter.setDateSelected(date, nowSelected);
                     if (firstDaySelected.equals(date)) {
                         // Right now, we are not supporting a range of one day, so we are removing the day instead.
-                        dispatchOnDateSelected(date, nowSelected);
+                        dispatchOnDateSelected(date, nowSelected, disabled);
                     } else if (firstDaySelected.isAfter(date)) {
                         // Selecting a range, dispatching...
                         dispatchOnRangeSelected(date, firstDaySelected);
@@ -1521,15 +1521,19 @@ public class MaterialCalendarView extends ViewGroup {
                     // Clearing selection and making a selection of the new date.
                     adapter.clearSelections();
                     adapter.setDateSelected(date, nowSelected);
-                    dispatchOnDateSelected(date, nowSelected);
+                    dispatchOnDateSelected(date, nowSelected, disabled);
                 }
             }
             break;
             default:
             case SELECTION_MODE_SINGLE: {
-                adapter.clearSelections();
-                adapter.setDateSelected(date, true);
-                dispatchOnDateSelected(date, true);
+                if (disabled) {
+                    dispatchOnDateSelected(date, false, true);
+                } else {
+                    adapter.clearSelections();
+                    adapter.setDateSelected(date, true);
+                    dispatchOnDateSelected(date, true, false);
+                }
             }
             break;
         }
@@ -1557,7 +1561,7 @@ public class MaterialCalendarView extends ViewGroup {
      *
      * @param dayView
      */
-    protected void onDateClicked(final DayView dayView) {
+    protected void onDateClicked(final DayView dayView, boolean isDisabled) {
         final CalendarDay currentDate = getCurrentDate();
         final CalendarDay selectedDate = dayView.getDate();
         final int currentMonth = currentDate.getMonth();
@@ -1565,14 +1569,14 @@ public class MaterialCalendarView extends ViewGroup {
 
         if (calendarMode == CalendarMode.MONTHS
                 && allowClickDaysOutsideCurrentMonth
-                && currentMonth != selectedMonth) {
+                && currentMonth != selectedMonth && !isDisabled) {
             if (currentDate.isAfter(selectedDate)) {
                 goToPrevious();
             } else if (currentDate.isBefore(selectedDate)) {
                 goToNext();
             }
         }
-        onDateClicked(dayView.getDate(), !dayView.isChecked());
+        onDateClicked(dayView.getDate(), !dayView.isChecked(), isDisabled);
 
     }
 
@@ -1593,7 +1597,7 @@ public class MaterialCalendarView extends ViewGroup {
      * @param date date that should be de-selected
      */
     protected void onDateUnselected(CalendarDay date) {
-        dispatchOnDateSelected(date, false);
+        dispatchOnDateSelected(date, false, false);
     }
 
     /*

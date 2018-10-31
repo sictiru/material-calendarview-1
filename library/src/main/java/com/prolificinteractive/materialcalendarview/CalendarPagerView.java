@@ -202,8 +202,12 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     public void setDaysExtra(ArrayList<CalendarDay> customDays) {
         for (DayView dayView : dayViews) {
             for (CalendarDay day : customDays) {
-                if (dayView.getDate().equals(day) && (dayView.getDate().equals(minDate) || dayView.getDate().isAfter(minDate))) {
-                    dayView.getTextDayExtra().setText(day.getExtra());
+                if (dayView.getDate().equals(day)) {
+                    if (dayView.isEnabled()) {
+                        dayView.getTextDayExtra().setText(day.getExtra());
+                    } else {
+                        dayView.getTextDayExtra().setText("-");
+                    }
                     if (!TextUtils.isEmpty(day.getColor())) {
                         dayView.getTextDayExtra().setTextColor(Color.parseColor(day.getColor()));
                     }
@@ -216,10 +220,9 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     public void setDisabledDays(ArrayList<CalendarDay> disabledDays) {
         for (DayView dayView : dayViews) {
             for (CalendarDay day : disabledDays) {
-                if (dayView.getDate().equals(day) && (dayView.getDate().equals(minDate) || dayView.getDate().isAfter(minDate))) {
-                    dayView.setEnabled(false);
+                if (dayView.getDate().equals(day)) {
+                    dayView.setDisabled(true);
                     dayView.getTextDay().setTextColor(Color.parseColor("#a7a6a6"));
-                    dayView.getTextDayExtra().setVisibility(View.GONE);
                 }
             }
         }
@@ -235,7 +238,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     public void onClick(final View v) {
         if (v instanceof DayView && !mcv.isSelectionDisabled()) {
             final DayView dayView = (DayView) v;
-            mcv.onDateClicked(dayView);
+            mcv.onDateClicked(dayView, dayView.isDisabled());
         }
     }
 

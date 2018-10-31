@@ -22,8 +22,6 @@
             <flag name="all" value="7" />
         </attr>
 
-        <attr name="mcv_maxSelectionCount" format="integer" />
-
         <attr name="mcv_allowClickDaysOutsideCurrentMonth" format="boolean" />
         <attr name="mcv_showWeekDays" format="boolean" />
 
@@ -52,6 +50,8 @@
             <enum name="friday" value="6" />
             <enum name="saturday" value="7" />
         </attr>
+
+        <attr name="mcv_maxSelectionCount" format="integer" />
 
         <attr name="mcv_calendarMode" format="enum">
             <enum name="month" value="0" />

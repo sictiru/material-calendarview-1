@@ -50,7 +50,8 @@ public class SelectionModesActivity extends AppCompatActivity
   @Override public void onDateSelected(
       @NonNull final MaterialCalendarView widget,
       @NonNull final CalendarDay date,
-      final boolean selected) {
+      final boolean selected,
+      final boolean isDisabled) {
     final String text = selected ? FORMATTER.format(date.getDate()) : "No Selection";
     Toast.makeText(SelectionModesActivity.this, text, Toast.LENGTH_SHORT).show();
   }
