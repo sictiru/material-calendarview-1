@@ -37,9 +37,6 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
     @BindView(R.id.textView)
     TextView textView;
 
-    String initStart;
-    String initEnd;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,24 +44,18 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
         ButterKnife.bind(this);
 
         widget.state().edit()
-                .setMinimumDate(CalendarDay.from(2018, 6, 20))
+                .setMinimumDate(CalendarDay.from(2018, 10, 1))
                 .setMaximumDate(CalendarDay.from(2020, 5, 12))
                 .commit();
         widget.setOnDateChangedListener(this);
         widget.setOnDateLongClickListener(this);
         widget.setOnMonthChangedListener(this);
         widget.setOnWeekChangedListener(this);
-
-        //Setup initial text
-        textView.setText("No Selection");
-//        Log.d("BasicActivity", widget.getInitStartDate() + " - " + widget.getInitEndDate());
-//        initStart = widget.getInitStartDate();
-//        initEnd = widget.getInitEndDate();
     }
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected, boolean isDisabled) {
-        textView.setText(selected && !isDisabled? FORMATTER.format(date.getDate()) : "No Selection");
+        textView.setText(selected && !isDisabled ? FORMATTER.format(date.getDate()) : "No Selection");
     }
 
     @Override

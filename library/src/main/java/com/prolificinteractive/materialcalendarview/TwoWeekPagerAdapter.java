@@ -14,7 +14,7 @@ public class TwoWeekPagerAdapter extends CalendarPagerAdapter<TwoWeekView> {
 
     @Override
     protected TwoWeekView createView(int position) {
-        return new TwoWeekView(mcv, getItem(position), mcv.getFirstDayOfWeek(), showWeekDays);
+        return new TwoWeekView(mcv, getItem(position), mcv.getFirstDayOfWeek(), showWeekDays, disabledPastDates);
     }
 
     @Override

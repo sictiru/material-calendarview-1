@@ -42,6 +42,7 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
     private List<DecoratorResult> decoratorResults = null;
     private boolean selectionEnabled = true;
     boolean showWeekDays;
+    boolean disabledPastDates;
 
     CalendarPagerAdapter(MaterialCalendarView mcv) {
         this.mcv = mcv;
@@ -171,6 +172,10 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
 
     public void setShowWeekDays(boolean showWeekDays) {
         this.showWeekDays = showWeekDays;
+    }
+
+    public void setDisabledPastDates(boolean disabledPastDates){
+        this.disabledPastDates = disabledPastDates;
     }
 
     public boolean isShowWeekDays() {

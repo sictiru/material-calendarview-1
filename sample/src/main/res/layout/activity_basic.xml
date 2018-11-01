@@ -20,9 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:mcv_calendarMode="two_weeks"
+            app:mcv_disablePastDates="true"
             app:mcv_firstDayOfWeek="monday"
             app:mcv_selectionMode="single"
-            app:mcv_showOtherDates="out_of_range" />
+            app:mcv_showOtherDates="all" />
     </LinearLayout>
 
     <TextView

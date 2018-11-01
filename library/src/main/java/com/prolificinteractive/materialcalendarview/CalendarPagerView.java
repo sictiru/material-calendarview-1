@@ -41,18 +41,21 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     private CalendarDay maxDate = null;
     private int firstDayOfWeek;
     protected boolean showWeekDays;
+    protected boolean disabledPastDates;
 
     private final Collection<DayView> dayViews = new ArrayList<>();
 
     public CalendarPagerView(@NonNull MaterialCalendarView view,
                              CalendarDay firstViewDay,
                              int firstDayOfWeek,
-                             boolean showWeekDays) {
+                             boolean showWeekDays,
+                             boolean disabledPastDates) {
         super(view.getContext());
         this.mcv = view;
         this.firstViewDay = firstViewDay;
         this.firstDayOfWeek = firstDayOfWeek;
         this.showWeekDays = showWeekDays;
+        this.disabledPastDates = disabledPastDates;
 
         setClipChildren(false);
         setClipToPadding(false);
@@ -77,7 +80,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
 
     protected void addDayView(Collection<DayView> dayViews, Calendar calendar) {
         CalendarDay day = CalendarDay.from(calendar);
-        DayView dayView = new DayView(getContext(), day);
+        DayView dayView = new DayView(getContext(), day, disabledPastDates);
         dayView.setOnClickListener(this);
         dayView.setOnLongClickListener(this);
         dayViews.add(dayView);
@@ -203,13 +206,13 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         for (DayView dayView : dayViews) {
             for (CalendarDay day : customDays) {
                 if (dayView.getDate().equals(day)) {
-                    if (dayView.isEnabled()) {
-                        dayView.getTextDayExtra().setText(day.getExtra());
-                    } else {
+                    if (dayView.isDisabled()) {
                         dayView.getTextDayExtra().setText("-");
-                    }
-                    if (!TextUtils.isEmpty(day.getColor())) {
-                        dayView.getTextDayExtra().setTextColor(Color.parseColor(day.getColor()));
+                    } else {
+                        dayView.getTextDayExtra().setText(day.getExtra());
+                        if (!TextUtils.isEmpty(day.getColor())) {
+                            dayView.getTextDayExtra().setTextColor(Color.parseColor(day.getColor()));
+                        }
                     }
                     dayView.getTextDayExtra().setVisibility(VISIBLE);
                 }

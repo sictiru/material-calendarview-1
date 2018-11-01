@@ -54,6 +54,7 @@ class DayView extends FrameLayout {
     private TextView textDayExtra;
     private boolean checked;
     private boolean disabled;
+    private boolean disablePastDates;
     @ShowOtherDates
     private int showOtherDates = MaterialCalendarView.SHOW_DEFAULTS;
 
@@ -74,11 +75,11 @@ class DayView extends FrameLayout {
     }
 
 
-    public DayView(Context context, CalendarDay day) {
+    public DayView(Context context, CalendarDay day, boolean disablePastDates) {
         super(context);
         init(context);
 
-        setDay(day);
+        setDay(day, disablePastDates);
     }
 
     private static Drawable generateBackground(int color, int fadeTime, Rect bounds) {
@@ -107,8 +108,9 @@ class DayView extends FrameLayout {
         setSelectionColor(this.selectionColor);
     }
 
-    public void setDay(CalendarDay date) {
+    public void setDay(CalendarDay date, boolean disablePastDates) {
         this.date = date;
+        this.disablePastDates = disablePastDates;
         textDay.setText(getDayText());
         if (getTextDay().length() == 1) {
             textDay.setPadding(dpToPx(16), dpToPx(10), dpToPx(16), dpToPx(10));
@@ -157,7 +159,7 @@ class DayView extends FrameLayout {
         this.checked = checked;
     }
 
-    public void setDisabled(boolean disabled){
+    public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
 
@@ -223,7 +225,9 @@ class DayView extends FrameLayout {
             shouldBeVisible |= isInMonth && isInRange;
         }
 
-        if (!isInMonth && shouldBeVisible) {
+        if (disablePastDates && date.isBefore(CalendarDay.today())) {
+            textDay.setTextColor(Color.parseColor("#a7a6a6"));
+        } else if (!isInMonth && shouldBeVisible) {
             textDay.setTextColor(textDay.getTextColors().getColorForState(
                     new int[]{-android.R.attr.state_enabled}, Color.GRAY));
         }

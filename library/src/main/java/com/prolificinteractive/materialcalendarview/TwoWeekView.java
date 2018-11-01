@@ -11,8 +11,8 @@ public class TwoWeekView extends CalendarPagerView {
 
     private static int MAX_WEEKS = 2;
 
-    TwoWeekView(@NonNull MaterialCalendarView view, CalendarDay month, int firstDayOfWeek, boolean showWeekDays) {
-        super(view, month, firstDayOfWeek, showWeekDays);
+    TwoWeekView(@NonNull MaterialCalendarView view, CalendarDay month, int firstDayOfWeek, boolean showWeekDays, boolean disabledPastDates) {
+        super(view, month, firstDayOfWeek, showWeekDays, disabledPastDates);
     }
 
     @Override

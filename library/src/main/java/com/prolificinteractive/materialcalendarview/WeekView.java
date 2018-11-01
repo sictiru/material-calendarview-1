@@ -15,8 +15,8 @@ import java.util.Collection;
 public class WeekView extends CalendarPagerView {
 
     public WeekView(@NonNull MaterialCalendarView view, CalendarDay firstViewDay,
-                    int firstDayOfWeek, boolean showWeekDays) {
-        super(view, firstViewDay, firstDayOfWeek, showWeekDays);
+                    int firstDayOfWeek, boolean showWeekDays, boolean disabledPastDates) {
+        super(view, firstViewDay, firstDayOfWeek, showWeekDays, disabledPastDates);
     }
 
     @Override

@@ -245,6 +245,7 @@ public class MaterialCalendarView extends ViewGroup {
     private boolean allowClickDaysOutsideCurrentMonth = true;
     private int firstDayOfWeek;
     private boolean showWeekDays;
+    private boolean disablePastDates;
 
     private State state;
 
@@ -308,10 +309,13 @@ public class MaterialCalendarView extends ViewGroup {
 
             showWeekDays = a.getBoolean(R.styleable.MaterialCalendarView_mcv_showWeekDays, true);
 
+            disablePastDates = a.getBoolean(R.styleable.MaterialCalendarView_mcv_disablePastDates, false);
+
             newState()
                     .setFirstDayOfWeek(firstDayOfWeek)
                     .setCalendarDisplayMode(CalendarMode.values()[calendarModeIndex])
                     .setShowWeekDays(showWeekDays)
+                    .setDisablePastDates(disablePastDates)
                     .commit();
 
             setSelectionMode(a.getInteger(
@@ -407,7 +411,7 @@ public class MaterialCalendarView extends ViewGroup {
 
         if (isInEditMode()) {
             removeView(pager);
-            MonthView monthView = new MonthView(this, currentMonth, getFirstDayOfWeek(), true);
+            MonthView monthView = new MonthView(this, currentMonth, getFirstDayOfWeek(), true, disablePastDates);
             monthView.setSelectionColor(getSelectionColor());
             monthView.setDateTextAppearance(adapter.getDateTextAppearance());
             monthView.setWeekDayTextAppearance(adapter.getWeekDayTextAppearance());
@@ -1906,6 +1910,7 @@ public class MaterialCalendarView extends ViewGroup {
         private final CalendarDay maxDate;
         private final boolean cacheCurrentPosition;
         private final boolean showWeekDays;
+        private final boolean disablePastDates;
 
         private State(final StateBuilder builder) {
             calendarMode = builder.calendarMode;
@@ -1914,6 +1919,7 @@ public class MaterialCalendarView extends ViewGroup {
             maxDate = builder.maxDate;
             cacheCurrentPosition = builder.cacheCurrentPosition;
             showWeekDays = builder.showWeekDays;
+            disablePastDates = builder.disablePastDates;
         }
 
         /**
@@ -1932,6 +1938,7 @@ public class MaterialCalendarView extends ViewGroup {
         private CalendarDay minDate = null;
         private CalendarDay maxDate = null;
         private boolean showWeekDays;
+        private boolean disablePastDates;
 
         public StateBuilder() {
         }
@@ -1943,6 +1950,7 @@ public class MaterialCalendarView extends ViewGroup {
             maxDate = state.maxDate;
             cacheCurrentPosition = state.cacheCurrentPosition;
             showWeekDays = state.showWeekDays;
+            disablePastDates = state.disablePastDates;
         }
 
         /**
@@ -2027,6 +2035,11 @@ public class MaterialCalendarView extends ViewGroup {
             return this;
         }
 
+        public StateBuilder setDisablePastDates(boolean disablePastDates) {
+            this.disablePastDates = disablePastDates;
+            return this;
+        }
+
         /**
          * Use this method to enable saving the current position when switching
          * between week and month mode. By default, the calendar update to the latest selected date
@@ -2108,6 +2121,7 @@ public class MaterialCalendarView extends ViewGroup {
             adapter = adapter.migrateStateAndReturn(newAdapter);
         }
         adapter.setShowWeekDays(showWeekDays);
+        adapter.setDisabledPastDates(disablePastDates);
         pager.setAdapter(adapter);
         setRangeDates(minDate, maxDate);
 
