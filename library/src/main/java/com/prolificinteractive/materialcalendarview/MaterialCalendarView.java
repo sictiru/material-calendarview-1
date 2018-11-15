@@ -2150,6 +2150,11 @@ public class MaterialCalendarView extends ViewGroup {
         adapter.setDisabledDays(disabledDays);
     }
 
+    public WeekDayRange getWeekRangeForDay(CalendarDay calendarDay) {
+        int currentIndex = adapter.getIndexForDay(calendarDay);
+        return adapter.getVisibleWeekDays(currentIndex);
+    }
+
     protected void dispatchOnWeekChanged(int position) {
         OnWeekChangedListener listener = weekListener;
         if (listener != null) {
