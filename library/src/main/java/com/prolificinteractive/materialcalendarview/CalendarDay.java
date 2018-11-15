@@ -166,6 +166,7 @@ public final class CalendarDay implements Parcelable {
     public void setColor(String color) {
         this.color = color;
     }
+
     @NonNull
     public Date getDate() {
         if (_date == null) {
@@ -278,7 +279,11 @@ public final class CalendarDay implements Parcelable {
     }
 
     public String getDateString() {
-        return year + "-" + (month + 1) + "-" + day;
+        if (day < 10) {
+            return year + "-" + (month + 1) + "-0" + day;
+        } else {
+            return year + "-" + (month + 1) + "-" + day;
+        }
     }
     /*
      * Parcelable Stuff
