@@ -282,10 +282,10 @@ public final class CalendarDay implements Parcelable {
         StringBuilder dateString = new StringBuilder(7);
         dateString.append(year);
         dateString.append("-");
-        if (month < 10) {
+        if (month + 1 < 10) {
             dateString.append("0");
         }
-        dateString.append(month);
+        dateString.append(month + 1);
         dateString.append("-");
         if (day < 10) {
             dateString.append("0");
