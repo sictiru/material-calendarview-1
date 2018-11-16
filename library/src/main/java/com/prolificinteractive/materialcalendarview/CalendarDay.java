@@ -279,11 +279,19 @@ public final class CalendarDay implements Parcelable {
     }
 
     public String getDateString() {
-        if (day < 10) {
-            return year + "-" + (month + 1) + "-0" + day;
-        } else {
-            return year + "-" + (month + 1) + "-" + day;
+        StringBuilder dateString = new StringBuilder(7);
+        dateString.append(year);
+        dateString.append("-");
+        if (month < 10) {
+            dateString.append("0");
         }
+        dateString.append(month);
+        dateString.append("-");
+        if (day < 10) {
+            dateString.append("0");
+        }
+        dateString.append(day);
+        return dateString.toString();
     }
     /*
      * Parcelable Stuff
