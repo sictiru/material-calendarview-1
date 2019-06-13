@@ -175,6 +175,14 @@ class DayView extends FrameLayout {
         return textDayExtra;
     }
 
+    public void setDateExtra(String extra) {
+        date.setExtra(extra);
+    }
+
+    public void setDateColor(String colorStr) {
+        date.setColor(colorStr);
+    }
+
     /**
      * @param drawable custom selection drawable
      */

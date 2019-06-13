@@ -209,8 +209,10 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
                     if (dayView.isDisabled()) {
                         dayView.getTextDayExtra().setText("-");
                     } else {
+                        dayView.setDateExtra(day.getExtra());
                         dayView.getTextDayExtra().setText(day.getExtra());
                         if (!TextUtils.isEmpty(day.getColor())) {
+                            dayView.setDateColor(day.getColor());
                             dayView.getTextDayExtra().setTextColor(Color.parseColor(day.getColor()));
                         }
                     }
