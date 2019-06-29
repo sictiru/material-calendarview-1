@@ -1,5 +1,6 @@
 package com.prolificinteractive.materialcalendarview;
 
+import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -70,6 +71,7 @@ public final class CalendarDay implements Parcelable {
     private final int day;
     private String extra;
     private String color;
+    private Typeface typeface;
 
     /**
      * Cache for calls to {@linkplain #getCalendar()}
@@ -165,6 +167,14 @@ public final class CalendarDay implements Parcelable {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public void setTypeface(Typeface typeface) {
+        this.typeface = typeface;
+    }
+
+    public Typeface getTypeface() {
+        return typeface;
     }
 
     @NonNull

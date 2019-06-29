@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -181,6 +182,10 @@ class DayView extends FrameLayout {
 
     public void setDateColor(String colorStr) {
         date.setColor(colorStr);
+    }
+
+    public void setTypeface(Typeface typeface) {
+        date.setTypeface(typeface);
     }
 
     /**
