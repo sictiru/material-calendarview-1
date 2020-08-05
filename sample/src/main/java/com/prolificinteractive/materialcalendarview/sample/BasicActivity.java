@@ -7,9 +7,11 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnCalendarMovedBackwardListener;
+import com.prolificinteractive.materialcalendarview.OnCalendarMovedForwardListener;
 import com.prolificinteractive.materialcalendarview.OnDateLongClickListener;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
@@ -27,7 +29,8 @@ import butterknife.OnClick;
 /**
  * Shows off the most basic usage
  */
-public class BasicActivity extends AppCompatActivity implements OnDateSelectedListener, OnMonthChangedListener, OnDateLongClickListener, OnWeekChangedListener {
+
+public class BasicActivity extends AppCompatActivity implements OnDateSelectedListener, OnMonthChangedListener, OnDateLongClickListener, OnWeekChangedListener, OnCalendarMovedBackwardListener, OnCalendarMovedForwardListener {
 
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
 
@@ -51,6 +54,11 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
         widget.setOnDateLongClickListener(this);
         widget.setOnMonthChangedListener(this);
         widget.setOnWeekChangedListener(this);
+        widget.setOnCalendarMoveForwardListener(this);
+        widget.setOnCalendarMoveBackwardListener(this);
+
+        //Setup initial text
+        textView.setText("No Selection");
     }
 
     @Override
@@ -96,5 +104,14 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
         disabledDays.add(CalendarDay.from(2018, 9, 30));
         disabledDays.add(CalendarDay.from(2018, 9, 31));
         widget.setDisabledDays(disabledDays);
+    }
+
+    public void onCalendarMovedBackward() {
+        Toast.makeText(this, "backward", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCalendarMovedForward() {
+        Toast.makeText(this, "forward", Toast.LENGTH_SHORT).show();
     }
 }

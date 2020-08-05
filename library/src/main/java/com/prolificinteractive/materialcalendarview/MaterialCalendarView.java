@@ -194,8 +194,10 @@ public class MaterialCalendarView extends ViewGroup {
         public void onClick(View v) {
             if (v == buttonFuture) {
                 pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+                movedForwardListener.onCalendarMovedForward();
             } else if (v == buttonPast) {
                 pager.setCurrentItem(pager.getCurrentItem() - 1, true);
+                movedBackwardListener.onCalendarMovedBackward();
             }
         }
     };
@@ -232,6 +234,8 @@ public class MaterialCalendarView extends ViewGroup {
     private OnMonthChangedListener monthListener;
     private OnWeekChangedListener weekListener;
     private OnRangeSelectedListener rangeListener;
+    private OnCalendarMovedForwardListener movedForwardListener;
+    private OnCalendarMovedBackwardListener movedBackwardListener;
 
     CharSequence calendarContentDescription;
     private int accentColor = 0;
@@ -1413,6 +1417,14 @@ public class MaterialCalendarView extends ViewGroup {
      */
     public void setOnMonthChangedListener(OnMonthChangedListener listener) {
         this.monthListener = listener;
+    }
+
+    public void setOnCalendarMoveForwardListener(OnCalendarMovedForwardListener listener) {
+        this.movedForwardListener = listener;
+    }
+
+    public void setOnCalendarMoveBackwardListener(OnCalendarMovedBackwardListener listener) {
+        this.movedBackwardListener = listener;
     }
 
     /**
