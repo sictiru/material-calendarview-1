@@ -194,10 +194,14 @@ public class MaterialCalendarView extends ViewGroup {
         public void onClick(View v) {
             if (v == buttonFuture) {
                 pager.setCurrentItem(pager.getCurrentItem() + 1, true);
-                movedForwardListener.onCalendarMovedForward();
+                if (movedForwardListener != null) {
+                    movedForwardListener.onCalendarMovedForward();
+                }
             } else if (v == buttonPast) {
                 pager.setCurrentItem(pager.getCurrentItem() - 1, true);
-                movedBackwardListener.onCalendarMovedBackward();
+                if (movedBackwardListener != null) {
+                    movedBackwardListener.onCalendarMovedBackward();
+                }
             }
         }
     };
