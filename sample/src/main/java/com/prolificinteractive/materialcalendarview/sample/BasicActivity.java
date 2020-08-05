@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 /**
  * Shows off the most basic usage
  */
-public class BasicActivity extends AppCompatActivity implements OnDateSelectedListener, OnMonthChangedListener, OnDateLongClickListener {
+public class BasicActivity extends AppCompatActivity implements OnDateSelectedListener, OnMonthChangedListener, OnDateLongClickListener, OnCalendarMovedBackwardListener, OnCalendarMovedForwardListener {
 
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
 
@@ -37,6 +37,8 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
         widget.setOnDateChangedListener(this);
         widget.setOnDateLongClickListener(this);
         widget.setOnMonthChangedListener(this);
+        widget.setOnCalendarMoveForwardListener(this);
+        widget.setOnCalendarMoveBackwardListener(this);
 
         //Setup initial text
         textView.setText("No Selection");
@@ -57,5 +59,15 @@ public class BasicActivity extends AppCompatActivity implements OnDateSelectedLi
     public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
         //noinspection ConstantConditions
         getSupportActionBar().setTitle(FORMATTER.format(date.getDate()));
+    }
+
+    @Override
+    public void onCalendarMovedBackward() {
+        Toast.makeText(this, "backward", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCalendarMovedForward() {
+        Toast.makeText(this, "forward", Toast.LENGTH_SHORT).show();
     }
 }
